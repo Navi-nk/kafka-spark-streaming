@@ -7,8 +7,6 @@ import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.streaming.OutputMode
 import org.apache.spark.sql.{DataFrame, SaveMode, SparkSession}
 
-case class EventRecord(hotelId: String, eventType: String, eventTime: Timestamp)
-
 object KafkaSparkJoinStreams extends App {
   Logger.getLogger("org").setLevel(Level.ERROR)
 
