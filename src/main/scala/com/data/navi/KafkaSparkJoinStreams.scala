@@ -47,9 +47,10 @@ object KafkaSparkJoinStreams extends App {
         batchDF.groupBy($"location", $"eventType", window($"eventTime", "30 minute"))
           .count()
           .orderBy($"window")
-          .select($"location", $"eventType", date_format($"window.start", "yyyy/MM/dd hh:mm:ss"), date_format($"window.end", "yyyy/MM/dd hh:mm:ss"), $"count")
+          .select($"location", $"eventType", date_format($"window.start", "yyyy/MM/dd hh:mm:ss").as("start"), date_format($"window.end", "yyyy/MM/dd hh:mm:ss").as("end"), $"count")
           .repartition(1)
           .write.mode(SaveMode.Overwrite)
+          .option("header","true")
           .csv("/Users/navi-mac/Desktop/workspace/trivago-kafka-spark/CSVOutput1")
     }
     .outputMode(OutputMode.Append())
